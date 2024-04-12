@@ -25,9 +25,11 @@ def listar_agendamentos(request):
 
 def confirmar_agendamento(request, agendamento_id):
     agendamento = get_object_or_404(Agendamento, id=agendamento_id)
-    if request.method == 'GET':
+    if request.method == 'POST':
         agendamento.status = 'CONFIRMADO'
         agendamento.save()
+        return redirect('pagina_confirmacao', agendamento_id=agendamento.id) 
+
     return render(request, 'confirmar_agendamento.html', {'agendamento': agendamento})
 
 def pagina_confirmacao(request, agendamento_id):
@@ -36,5 +38,6 @@ def pagina_confirmacao(request, agendamento_id):
         agendamento.status = 'CONFIRMADO'
         agendamento.save()
         return redirect('pagina_confirmacao', agendamento_id=agendamento.id) 
+
     return render(request, 'pagina_confirmacao.html', {'agendamento': agendamento})
 
